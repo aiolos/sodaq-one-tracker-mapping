@@ -18,7 +18,7 @@ $ composer install
 
 To create the database tables (in the database you set in your local config) run:
 ```bash
-$ ./vendor/bin/doctrine-module orm:schema-tool create
+$ ./vendor/bin/doctrine-module orm:schema-tool:create
 ```
 
 If you don't have composer, see [getcomposer.org](http://getcomposer.org) for more information
