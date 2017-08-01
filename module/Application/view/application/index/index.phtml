@@ -1,0 +1,129 @@
+<div class="row">
+    <div class="col-md-12">
+    <div id="map" style="height: 600px;" class="col-md-12"></div>
+    </div>
+    <script>
+
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: {lat: 52.072, lng: 5.05}
+            });
+
+            setMarkers(map);
+        }
+
+        // Marker data that has been prepared in the controller
+        <?php
+        echo $markers;
+        echo $gateways;
+        ?>
+
+        function setMarkers(map) {
+            // Adds markers to the map.
+            // Marker sizes are expressed as a Size of X,Y where the origin of the image
+            // (0,0) is located in the top left of the image.
+            // Origins, anchor positions and coordinates of the marker increase in the X
+            // direction to the right and in the Y direction down.
+            var image = {
+                url: '<?php echo $this->basePath('img/wifi.png') ?>',
+                size: new google.maps.Size(32, 32),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(16, 32)
+            };
+            var gatewayImage = {
+                url: '<?php echo $this->basePath('img/gateway.png') ?>',
+                size: new google.maps.Size(32, 32),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(16, 32)
+            };
+            // Shapes define the clickable region of the icon. The type defines an HTML
+            // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+            // The final coordinate closes the poly by connecting to the first coordinate.
+            var shape = {
+                coords: [1, 1, 1, 20, 18, 20, 18, 1],
+                type: 'poly'
+            };
+            for (var i = 0; i < sodaqMarkers.length; i++) {
+                var point = sodaqMarkers[i];
+                var marker = new google.maps.Marker({
+                    position: {lat: point[1], lng: point[2]},
+                    map: map,
+                    icon: image,
+                    shape: shape,
+                    title: point[0]
+                });
+            }
+            for (var i = 0; i < gatewayMarkers.length; i++) {
+                var point = gatewayMarkers[i];
+                var marker = new google.maps.Marker({
+                    position: {lat: point[1], lng: point[2]},
+                    map: map,
+                    icon: gatewayImage,
+                    shape: shape,
+                    title: point[0]
+                });
+            }
+        }
+    </script>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Messages</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                <table class="table" id="messages">
+                    <thead>
+                        <tr>
+                            <th>Device Id</th>
+                            <th>Date / Time</th>
+                            <th>Latitude / Longitude</th>
+                            <th>Speed</th>
+                            <th>Course</th>
+                            <th>Voltage</th>
+                            <th>Temperature</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    foreach ($messages as $message) {
+                        echo '<tr>';
+                        echo '<td>' . $message->deviceId . '</td>';
+                        echo '<td>' . substr($message->metadata->time, 0, 10) . ' - ';
+                        echo substr($message->metadata->time, 11, 8) . '</td>';
+                        if (!empty($message->decodedPayload)) {
+                            echo '<td>';
+                            echo '<a href="http://maps.google.com/?q='
+                                . $message->decodedPayload->lat . ',' . $message->decodedPayload->lon . '">'
+                                . $message->decodedPayload->lat . ' / ' . $message->decodedPayload->lon . '</a>';
+                            echo '</td>';
+                            echo '<td>' . $message->decodedPayload->speed . '</td>';
+                            echo '<td>' . $message->decodedPayload->course . '</td>';
+                            echo '<td>' . $message->decodedPayload->batvolt . 'v</td>';
+                            echo '<td>' . $message->decodedPayload->boardtemp . '&deg;C</td>';
+                        } else {
+                            echo '<td></td><td></td><td></td><td></td><td></td>';
+                        }
+                        echo '</tr>';
+                    }
+
+                    ?>
+                    </tbody>
+                </table>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=<?php echo $apiKey; ?>&callback=initMap">
+</script>
+<script>
+$(document).ready(function(){
+    $('#messages').DataTable();
+});
+</script>
