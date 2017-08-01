@@ -12,6 +12,6 @@ install:
   - composer install --no-interaction
 
 script:
-  - vendor/bin/phpcs  --standard=phpcs.xml
-  - vendor/bin/phpcpd --exclude test --exclude vendor ./
+  - vendor/bin/phpcs  --standard=phpcs.xml -n
+  - vendor/bin/phpcpd --exclude vendor ./
   # - vendor/bin/phpunit
