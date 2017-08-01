@@ -81,6 +81,7 @@
                         <tr>
                             <th>Device Id</th>
                             <th>Date / Time</th>
+                            <th>Date / Time Sort</th>
                             <th>Latitude / Longitude</th>
                             <th>Speed</th>
                             <th>Course</th>
@@ -93,8 +94,10 @@
                     foreach ($messages as $message) {
                         echo '<tr>';
                         echo '<td>' . $message->deviceId . '</td>';
-                        echo '<td>' . substr($message->metadata->time, 0, 10) . ' - ';
-                        echo substr($message->metadata->time, 11, 8) . '</td>';
+                        echo '<td>';
+                        echo DateTime::createFromFormat('Y-m-d\TH:i:s', substr($message->metadata->time, 0, 19))->format('d-m-Y H:i:s');
+                        echo '</td>';
+                        echo '<td>' . substr($message->metadata->time, 0, 19) . '</td>';
                         if (!empty($message->decodedPayload)) {
                             echo '<td>';
                             echo '<a href="http://maps.google.com/?q='
@@ -124,6 +127,43 @@
 </script>
 <script>
 $(document).ready(function(){
-    $('#messages').DataTable();
+    $('#messages').DataTable({
+        order: [[1, "desc"]],
+        columns: [
+            {
+                data: "id",
+                sortable: false
+            },
+            {
+                data: "timestamp",
+                orderData: [2]
+            },
+            {
+                data: "timestamp_sorting",
+                visible: false,
+                searchable: false
+            },
+            {
+                data: "latLon",
+                sortable: false
+            },
+            {
+                data: "speed",
+                sortable: false
+            },
+            {
+                data: "course",
+                sortable: false
+            },
+            {
+                data: "voltage",
+                sortable: false
+            },
+            {
+                data: "temperature",
+                sortable: false
+            }
+        ]
+    });
 });
 </script>

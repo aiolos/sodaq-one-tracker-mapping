@@ -37,6 +37,8 @@ If you don't have composer, see [getcomposer.org](http://getcomposer.org) for mo
 - ~~Automatically decode raw payload~~
 - ~~Change marker icons~~
 - ~~Change application icon~~
+- ~~Pretty print the json in the requests list~~
+- ~~Order the timestamps in datatables better~~
 - Gateways:
     - ~~Show the used gateways on the map~~
     - Show a line to the send location
@@ -45,8 +47,8 @@ If you don't have composer, see [getcomposer.org](http://getcomposer.org) for mo
 - Only show a limited number of markers, for example using the datatables pagination
 - Enable/disable gateways and tracker points in map
 - Create some unit test, especially for decoding the payloads
-- Pretty print the json in the requests list
-- Order the timestamps in datatables better
 - Make a popup in the map to show more information about the datapoint in the map
 - Adapt center and zoom level to the available datapoints
 - Add some logging
+- Only use php7
+- Add phpstan (php7 required)

@@ -10,6 +10,7 @@
                         <tr>
                             <th>Id</th>
                             <th>Timestamp</th>
+                            <th>TimestampSort</th>
                             <th>Status</th>
                             <th>Content</th>
                         </tr>
@@ -21,8 +22,9 @@
                         echo '<tr>';
                         echo '<td>' . $payload->getId() . '</td>';
                         echo '<td>' . $payload->getDateCreated()->format('d-m-Y H:i:s') . '</td>';
+                        echo '<td>' . $payload->getDateCreated()->format('Y-m-d H:i:s') . '</td>';
                         echo '<td>' . $payload->getFormattedStatus() . '</td>';
-                        echo '<td><font size="1">' . $payload->getContent() . '</font></td>';
+                        echo '<td>' . $payload->getContent() . '</td>';
                         echo '</tr>';
                     }
 
@@ -35,7 +37,36 @@
 </div>
 <script>
     $(document).ready(function(){
-        $('#requests').DataTable();
+        $('#requests').DataTable({
+            order: [[0, "desc"]],
+            columns: [
+                {
+                    data: "id",
+                    sortable: true
+                },
+                {
+                    data: "timestamp",
+                    orderData: [2]
+                },
+                {
+                    data: "timestamp_sorting",
+                    visible: false,
+                    searchable: false
+                },
+                {
+                    data: "status"
+                },
+                {
+                    data: "content",
+                    sortable: false,
+                    render: function (data, type, row) {
+                        jsonData = JSON.parse(data);
+                        delete jsonData['downlink_url'];
+                        return "<pre style='font-size: 8px;'>" + JSON.stringify(jsonData, undefined, 4) + "</pre>";
+                    }
+                }
+            ]
+        });
     });
 </script>
 
