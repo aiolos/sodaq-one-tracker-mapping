@@ -16,6 +16,11 @@ After a checkout of this repository, you need to run composer:
 $ composer install
 ```
 
+To create the database tables (in the database you set in your local config) run:
+```bash
+$ ./vendor/bin/doctrine-module ormd:schema-tool create
+```
+
 If you don't have composer, see [getcomposer.org](http://getcomposer.org) for more information
 
 - In the console of TheThingsNetwork, you need to add a http-integration, see https://youtu.be/Uebcq7xmI1M for more information
