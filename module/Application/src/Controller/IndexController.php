@@ -46,10 +46,14 @@ class IndexController extends AbstractActionController
             }
             if (property_exists($messageForView->metadata, 'gateways')) {
                 foreach ($messageForView->metadata->gateways as $gateway) {
-                    $gateways[$gateway->gtw_id] = [
-                        'latitude' => $gateway->latitude,
-                        'longitude' => $gateway->longitude
-                    ];
+                    if (property_exists($gateway, 'longitude')
+                        && property_exists($gateway, 'latitude')
+                    ) {
+                        $gateways[$gateway->gtw_id] = [
+                            'latitude' => $gateway->latitude,
+                            'longitude' => $gateway->longitude
+                        ];
+                    }
                 }
             }
         }
@@ -92,7 +96,8 @@ class IndexController extends AbstractActionController
         if (!$request->isPost()) {
             return new JsonModel(['status' => 'error', 'message' => 'You should do a post']);
         }
-        if ($request->getHeader($this->config['theThingsNetwork']['authHeaderKey'])->getFieldValue()
+        if (!$request->getHeader($this->config['theThingsNetwork']['authHeaderKey'])
+            || $request->getHeader($this->config['theThingsNetwork']['authHeaderKey'])->getFieldValue()
             !== $this->config['theThingsNetwork']['authHeaderValue']
         ) {
             return new JsonModel(['status' => 'error', 'message' => 'Wrong authentication header']);
