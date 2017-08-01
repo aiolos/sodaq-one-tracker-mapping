@@ -8,6 +8,7 @@ php:
 sudo: false
 
 install:
+  - cp phpunit.xml.dist phpunit.xml
   - cp config/autoload/local.php.travis config/autoload/local.php
   - mysql -u root -e 'create database things;'
   - composer self-update
@@ -17,4 +18,4 @@ install:
 script:
   - vendor/bin/phpcs  --standard=phpcs.xml -n
   - vendor/bin/phpcpd --exclude vendor ./
-  # - vendor/bin/phpunit
+  - vendor/bin/phpunit

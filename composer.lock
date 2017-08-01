@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f93c343768c533b7b185fe872b3921e3",
+    "content-hash": "6867c23df5d20cc5be4ffc5167554d00",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -4413,21 +4413,21 @@
         },
         {
             "name": "zendframework/zend-test",
-            "version": "3.1.0",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-test.git",
-                "reference": "9665205827ed6ee69f1ef82990362057c789250c"
+                "reference": "f1ee9ae3f69446f19f4015826b7a70d5ff2f5644"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-test/zipball/9665205827ed6ee69f1ef82990362057c789250c",
-                "reference": "9665205827ed6ee69f1ef82990362057c789250c",
+                "url": "https://api.github.com/repos/zendframework/zend-test/zipball/f1ee9ae3f69446f19f4015826b7a70d5ff2f5644",
+                "reference": "f1ee9ae3f69446f19f4015826b7a70d5ff2f5644",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.6 || ^7.0",
-                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0",
+                "phpunit/phpunit": "^4.0 || ^5.0",
                 "sebastian/version": "^1.0.4 || ^2.0",
                 "zendframework/zend-console": "^2.6",
                 "zendframework/zend-dom": "^2.6",
@@ -4440,9 +4440,9 @@
                 "zendframework/zend-view": "^2.6.3"
             },
             "require-dev": {
+                "fabpot/php-cs-fixer": "1.7.*",
                 "mikey179/vfsstream": "~1.2",
                 "symfony/finder": "^2.2",
-                "zendframework/zend-coding-standard": "~1.0.0",
                 "zendframework/zend-i18n": "^2.6",
                 "zendframework/zend-log": "^2.7.1",
                 "zendframework/zend-modulemanager": "^2.7.1",
@@ -4458,8 +4458,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.1-dev",
-                    "dev-develop": "3.2-dev"
+                    "dev-master": "3.0-dev",
+                    "dev-develop": "3.1-dev"
                 }
             },
             "autoload": {
@@ -4476,7 +4476,7 @@
                 "test",
                 "zf2"
             ],
-            "time": "2017-05-01T19:54:00+00:00"
+            "time": "2016-09-06T16:36:24+00:00"
         }
     ],
     "aliases": [],
