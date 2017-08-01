@@ -8,8 +8,11 @@ php:
 sudo: false
 
 install:
+  - cp config/autoload/local.php.travis config/autoload/local.php
+  - mysql -u root -e 'create database things;'
   - composer self-update
   - composer install --no-interaction
+  - ./vendor/bin/doctrine-module orm:schema-tool create
 
 script:
   - vendor/bin/phpcs  --standard=phpcs.xml -n

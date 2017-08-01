@@ -1,6 +1,6 @@
 <?php
 /**
- * Local Configuration Override
+ * Local Configuration Override for travis
  *
  * This configuration override file is for overriding environment-specific and
  * security-sensitive configuration information. Copy this file without the
@@ -19,9 +19,9 @@ return [
                 'driverClass' => PDOMySqlDriver::class,
                 'params' => [
                     'host'     => '127.0.0.1',
-                    'user'     => 'user',
-                    'password' => 'pass',
-                    'dbname'   => 'database',
+                    'user'     => 'root',
+                    'password' => '',
+                    'dbname'   => 'travis',
                 ]
             ],
         ],
