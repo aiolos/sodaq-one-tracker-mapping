@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/aiolos/sodaq-one-tracker-mapping.svg?branch=master)](https://travis-ci.org/aiolos/sodaq-one-tracker-mapping)
+[![License](https://img.shields.io/github/license/aiolos/sodaq-one-tracker-mapping.svg)](LICENSE.md)
+
 # SoDaq One Tracker Mapping
 
 ## Introduction
