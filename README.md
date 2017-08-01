@@ -1,5 +1,8 @@
 [![Build Status](https://travis-ci.org/aiolos/sodaq-one-tracker-mapping.svg?branch=master)](https://travis-ci.org/aiolos/sodaq-one-tracker-mapping)
 [![License](https://img.shields.io/github/license/aiolos/sodaq-one-tracker-mapping.svg)](LICENSE.md)
+[![Code Climate](https://codeclimate.com/github/aiolos/sodaq-one-tracker-mapping/badges/gpa.svg)](https://codeclimate.com/github/aiolos/sodaq-one-tracker-mapping)
+[![Issue Count](https://codeclimate.com/github/aiolos/sodaq-one-tracker-mapping/badges/issue_count.svg)](https://codeclimate.com/github/aiolos/sodaq-one-tracker-mapping)
+[![Test Coverage](https://codeclimate.com/github/aiolos/sodaq-one-tracker-mapping/badges/coverage.svg)](https://codeclimate.com/github/aiolos/sodaq-one-tracker-mapping/coverage)
 
 # SoDaq One Tracker Mapping
 

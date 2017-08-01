@@ -1,0 +1,4 @@
+exclude_paths:
+- "public/css/*"
+- "public/js/*"
+- "vendor/*"
