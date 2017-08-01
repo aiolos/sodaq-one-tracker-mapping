@@ -55,7 +55,12 @@ class IndexController extends AbstractActionController
         }
         $gatewaysJsArray = 'var gatewayMarkers = [';
         foreach ($gateways as $gatewayId => $gateway) {
-            $gatewaysJsArray .= '["'. $gatewayId . '", '. $gateway['latitude'] .', '. $gateway['longitude'] .'],';
+            if (strlen($gateway['latitude']) > 0 && strlen($gateway['longitude']) > 0) {
+                $gatewaysJsArray .= '["';
+                $gatewaysJsArray .= $gatewayId . '", ';
+                $gatewaysJsArray .= $gateway['latitude'] . ', ';
+                $gatewaysJsArray .= $gateway['longitude'] . '],';
+            }
         }
 
         $markers .= '];';
