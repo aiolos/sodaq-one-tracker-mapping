@@ -280,7 +280,7 @@ class Message
             ->setDownlinkUrl($content['downlink_url'])
         ;
         try {
-            $decoded = Message::decodeRawPayload($message->getRawPayload());
+            $decoded = $message->decodeRawPayload($message->getRawPayload());
             $message->setDecodedPayload(json_encode($decoded));
         } catch (\Exception $e) {
             // For now, we silently ignore
@@ -293,13 +293,13 @@ class Message
      * Decode the raw payload in the message,
      * see http://forum.sodaq.com/t/interpreting-payload-data-from-the-sodaqone-universaltracker/374
      * for more information
-     * @param $payload_raw
+     * @param $rawPayload
      * @return array
      */
-    public static function decodeRawPayload($payload_raw)
+    public static function decodeRawPayload($rawPayload)
     {
         $parsed = [];
-        $hex = bin2hex(base64_decode($payload_raw));
+        $hex = bin2hex(base64_decode($rawPayload));
         // Currently we only support the sodaq one tracker payload, which sends only 21 bytes
         if (strlen($hex) !== 42) {
             return null;
