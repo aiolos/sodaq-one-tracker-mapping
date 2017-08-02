@@ -1,4 +1,5 @@
 exclude_paths:
 - "public/css/"
 - "public/js/"
+- "public/js/bootstrap.js"
 - "vendor/"
