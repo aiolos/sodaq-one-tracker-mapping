@@ -1,18 +1,10 @@
 engines:
-  duplication:
-    enabled: true
-    config:
-      languages:
-      - php
   phpcodesniffer:
     enabled: true
   phpmd:
     enabled: true
 languages:
-  JavaScript: true
-  Ruby: false
-  Python: false
-  PHP: true 
+  PHP: true
 exclude_paths:
   - "public/css/"
   - "public/js/"
