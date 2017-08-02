@@ -1,9 +1,10 @@
-JavaScript: true
-Ruby: false
-Python: false
-PHP: true
+languages:
+  JavaScript: true
+  Ruby: false
+  Python: false
+  PHP: true
 
 exclude_paths:
-- "public/css/"
-- "public/js/"
-- "vendor/"
+  - "public/css/"
+  - "public/js/"
+  - "vendor/"
