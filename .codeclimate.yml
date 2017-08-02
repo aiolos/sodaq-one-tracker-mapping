@@ -1,3 +1,4 @@
+---
 engines:
   phpcodesniffer:
     enabled: true
