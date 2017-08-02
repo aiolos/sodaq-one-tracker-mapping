@@ -3,6 +3,7 @@
 namespace Application;
 
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Zend\Log\Logger;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 
@@ -68,5 +69,18 @@ return [
                 ]
             ]
         ]
-    ]
+    ],
+    'log' => [
+        'ThingsLogger' => [
+            'writers' => [
+                [
+                    'name' => 'stream',
+                    'priority' => Logger::DEBUG,
+                    'options' => [
+                        'stream' => __DIR__ . '/../../../data/log/things.log',
+                    ],
+                ],
+            ],
+        ],
+    ],
 ];

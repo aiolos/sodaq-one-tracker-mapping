@@ -14,10 +14,12 @@ class IndexController extends AbstractActionController
 {
     protected $entityManager;
 
-    public function __construct(EntityManager $entityManager, $config)
+    public function __construct(EntityManager $entityManager, $config, $logger)
     {
         $this->config = $config;
         $this->entityManager = $entityManager;
+        /** @var \Zend\Log\Logger logger */
+        $this->logger = $logger;
     }
 
     public function indexAction()
@@ -102,6 +104,9 @@ class IndexController extends AbstractActionController
         ) {
             return new JsonModel(['status' => 'error', 'message' => 'Wrong authentication header']);
         }
+
+        $this->logger->info('Post request coming from: ' . $_SERVER['REMOTE_ADDR'] . '; User Agent: ' . $_SERVER['HTTP_USER_AGENT']);
+
         $payload = new Payload();
         $payload->setDateCreated(new \DateTime());
 

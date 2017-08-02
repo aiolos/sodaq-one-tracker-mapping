@@ -11,6 +11,10 @@ class IndexControllerFactory implements FactoryInterface
     {
         $config = $container->get('config');
         $entityManager = $container->get(EntityManager::class);
-        return new IndexController($entityManager, $config);
+
+        /** @var \Zend\Log\Logger $logger */
+        $logger = $container->get('ThingsLogger');
+
+        return new IndexController($entityManager, $config, $logger);
     }
 }
