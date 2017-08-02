@@ -5,6 +5,7 @@ namespace Application\Controller;
 use Application\Entity\Message;
 use Application\Entity\Payload;
 use Doctrine\ORM\Query;
+use Zend\Json\Json;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
@@ -106,6 +107,28 @@ class IndexController extends AbstractActionController
         }
 
         $this->logger->info('Post request coming from: ' . $_SERVER['REMOTE_ADDR'] . '; User Agent: ' . $_SERVER['HTTP_USER_AGENT']);
+
+        // Validate
+        $schemaPath = __DIR__ . '/../../../../data/schema/request.json';
+        $validator = new \JsonSchema\Validator;
+        if (!file_exists($schemaPath)) {
+            $this->logger->info('Scheme file could not be found: ' . $schemaPath);
+            return new JsonModel(['status' => 'error', 'message' => 'Schema file cannot be found']);
+        }
+        $schema = Json::decode(file_get_contents($schemaPath));
+        $validator->validate(
+            Json::decode(($request->getContent())),
+            $schema
+        );
+
+        if ($validator->isValid()) {
+            $this->logger->info("The supplied JSON validates against the schema.");
+        } else {
+            $this->logger->info("JSON does not validate. Violations:");
+            foreach ($validator->getErrors() as $error) {
+                $this->logger->info(sprintf("[%s] %s", $error['property'], $error['message']));
+            }
+        }
 
         $payload = new Payload();
         $payload->setDateCreated(new \DateTime());

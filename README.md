@@ -51,7 +51,7 @@ If you don't have composer, see [getcomposer.org](http://getcomposer.org) for mo
     - ~~Show the used gateways on the map~~
     - Show a line to the send location
     - Save the gateways that are available in the metadata
-    - Create a database relation between the tracker point and the  
+    - Create a database relation between the tracker point and the gateway
 - Only show a limited number of markers, for example using the datatables pagination
 - Enable/disable gateways and tracker points in map
 - Create some unit test, especially for decoding the payloads
@@ -60,3 +60,5 @@ If you don't have composer, see [getcomposer.org](http://getcomposer.org) for mo
 - Add some logging
 - Only use php7
 - Add phpstan (php7 required)
+- More mobile friendly
+- Add graphs (using highcharts)

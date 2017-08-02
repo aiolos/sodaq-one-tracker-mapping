@@ -1,0 +1,30 @@
+{
+  "title": "Request",
+  "type": "object",
+  "properties": {
+    "app_id": {
+      "type": "string"
+    },
+    "dev_id": {
+      "type": "string"
+    },
+    "hardware_serial": {
+      "type": "string"
+    },
+    "port": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "counter": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "payload_raw": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": ["app_id", "dev_id", "hardware_serial", "port", "counter", "payload_raw", "metadata"]
+}

@@ -1,0 +1,25 @@
+{
+  "title": "Metadata",
+  "type": "object",
+  "properties": {
+    "time": {
+      "type": "string"
+    },
+    "frequency": {
+      "type": "number"
+    },
+    "modulation": {
+      "type": "string"
+    },
+    "dat_rate": {
+      "type": "string"
+    },
+    "coding_rate": {
+      "type": "string"
+    },
+    "gateways": {
+      "type": "array"
+    }
+  },
+  "required": ["time"]
+}
