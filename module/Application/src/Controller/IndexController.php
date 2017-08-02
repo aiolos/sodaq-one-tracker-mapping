@@ -121,9 +121,7 @@ class IndexController extends AbstractActionController
             $schema
         );
 
-        if ($validator->isValid()) {
-            $this->logger->info("The supplied JSON validates against the schema.");
-        } else {
+        if (!$validator->isValid()) {
             $this->logger->info("JSON does not validate. Violations:");
             foreach ($validator->getErrors() as $error) {
                 $this->logger->info(sprintf("[%s] %s", $error['property'], $error['message']));
