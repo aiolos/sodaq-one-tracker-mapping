@@ -4,6 +4,7 @@
 [![Issue Count](https://codeclimate.com/github/aiolos/sodaq-one-tracker-mapping/badges/issue_count.svg)](https://codeclimate.com/github/aiolos/sodaq-one-tracker-mapping)
 [![Test Coverage](https://codeclimate.com/github/aiolos/sodaq-one-tracker-mapping/badges/coverage.svg)](https://codeclimate.com/github/aiolos/sodaq-one-tracker-mapping/coverage)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0248f3aa5ecf408e832e4536c397bb73)](https://www.codacy.com/app/aiolos/sodaq-one-tracker-mapping?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=aiolos/sodaq-one-tracker-mapping&amp;utm_campaign=Badge_Grade)
+[![Repository Size](https://reposs.herokuapp.com/?path=aiolos/sodaq-one-tracker-mapping)](https://github.com/ruddfawcett/reposs)
 
 # SoDaq One Tracker Mapping
 
