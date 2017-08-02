@@ -8,7 +8,11 @@ engines:
     enabled: true
   phpmd:
     enabled: true
-
+languages:
+  JavaScript: true
+  Ruby: false
+  Python: false
+  PHP: true 
 exclude_paths:
   - "public/css/"
   - "public/js/"
