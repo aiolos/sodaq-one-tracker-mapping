@@ -1,8 +1,13 @@
-languages:
-  JavaScript: true
-  Ruby: false
-  Python: false
-  PHP: true
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - php
+  phpcodesniffer:
+    enabled: true
+  phpmd:
+    enabled: true
 
 exclude_paths:
   - "public/css/"
