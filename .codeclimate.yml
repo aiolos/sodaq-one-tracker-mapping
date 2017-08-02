@@ -1,20 +1,9 @@
-engines:
-  eslint:
-    enabled: true
-  csslint:
-    enabled: true
-  duplication:
-    enabled: true
-    config:
-      languages:
-      - php:
-      - javascript:
-ratings:
-  paths:
-  - config/**
-  - module/**
+JavaScript: true
+Ruby: false
+Python: false
+PHP: true
+
 exclude_paths:
 - "public/css/"
 - "public/js/"
-- "public/js/bootstrap.js"
 - "vendor/"
