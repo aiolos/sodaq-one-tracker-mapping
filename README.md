@@ -47,6 +47,7 @@ If you don't have composer, see [getcomposer.org](http://getcomposer.org) for mo
 - ~~Change application icon~~
 - ~~Pretty print the json in the requests list~~
 - ~~Order the timestamps in datatables better~~
+- ~~Create some unit test, especially for decoding the payloads~~
 - Gateways:
     - ~~Show the used gateways on the map~~
     - Show a line to the send location
@@ -54,7 +55,6 @@ If you don't have composer, see [getcomposer.org](http://getcomposer.org) for mo
     - Create a database relation between the tracker point and the gateway
 - Only show a limited number of markers, for example using the datatables pagination
 - Enable/disable gateways and tracker points in map
-- Create some unit test, especially for decoding the payloads
 - Make a popup in the map to show more information about the datapoint in the map
 - Adapt center and zoom level to the available datapoints
 - Add some logging
@@ -62,3 +62,5 @@ If you don't have composer, see [getcomposer.org](http://getcomposer.org) for mo
 - Add phpstan (php7 required)
 - More mobile friendly
 - Add graphs (using highcharts)
+    - Temperature
+    - Voltage
