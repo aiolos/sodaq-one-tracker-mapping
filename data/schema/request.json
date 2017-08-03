@@ -24,7 +24,10 @@
     },
     "metadata": {
       "type": "object"
+    },
+    "downlink_url": {
+      "type": "string"
     }
   },
-  "required": ["app_id", "dev_id", "hardware_serial", "port", "counter", "payload_raw", "metadata"]
+  "required": ["app_id", "dev_id", "hardware_serial", "port", "counter", "payload_raw", "metadata", "downlink_url"]
 }

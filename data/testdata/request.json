@@ -1,0 +1,31 @@
+{
+  "app_id": "application_id",
+  "dev_id": "device_id",
+  "hardware_serial": "00012345001ABCDE",
+  "port": 1,
+  "counter": 33,
+  "payload_raw": "v0GDWXYZOlQLH4JLCwPx/w8AjAUL",
+  "metadata": {
+    "time": "2017-08-03T15:31:13.06484532Z",
+    "frequency": 868.1,
+    "modulation": "LORA",
+    "data_rate": "SF9BW125",
+    "coding_rate": "4/5",
+    "gateways": [
+      {
+        "gtw_id": "eui-0000024b080e0ffd",
+        "gtw_trusted": true,
+        "timestamp": 2193143092,
+        "time": "2017-08-03T15:31:12.641821Z",
+        "channel": 0,
+        "rssi": -112,
+        "snr": 1.8,
+        "rf_chain": 1,
+        "latitude": 52.08567,
+        "longitude": 5.1092,
+        "altitude": 111
+      }
+    ]
+  },
+  "downlink_url": "https://example.com"
+}

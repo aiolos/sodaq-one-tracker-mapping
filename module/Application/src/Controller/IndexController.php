@@ -88,12 +88,14 @@ class IndexController extends AbstractActionController
         /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
         if (!$request->isPost()) {
+            $this->getResponse()->setStatusCode(400);
             return new JsonModel(['status' => 'error', 'message' => 'You should do a post']);
         }
         if (!$request->getHeader($this->config['theThingsNetwork']['authHeaderKey'])
             || $request->getHeader($this->config['theThingsNetwork']['authHeaderKey'])->getFieldValue()
             !== $this->config['theThingsNetwork']['authHeaderValue']
         ) {
+            $this->getResponse()->setStatusCode(403);
             return new JsonModel(['status' => 'error', 'message' => 'Wrong authentication header']);
         }
 
@@ -103,12 +105,20 @@ class IndexController extends AbstractActionController
         $schemaPath = __DIR__ . '/../../../../data/schema/request.json';
         $validator = new \JsonSchema\Validator;
         if (!file_exists($schemaPath)) {
-            $this->logger->info('Scheme file could not be found: ' . $schemaPath);
+            $this->logger->emerg('Scheme file could not be found: ' . $schemaPath);
             return new JsonModel(['status' => 'error', 'message' => 'Schema file cannot be found']);
         }
+        try {
+            $requestContent = Json::decode(($request->getContent()));
+        } catch (\Exception $exception) {
+            $this->getResponse()->setStatusCode(400);
+            $this->logger->err('Request content could not be decoded: ' . $exception->getTraceAsString());
+            return new JsonModel(['status' => 'error', 'message' => 'Request content could not be decoded']);
+        }
+
         $schema = Json::decode(file_get_contents($schemaPath));
         $validator->validate(
-            Json::decode(($request->getContent())),
+            $requestContent,
             $schema
         );
 
