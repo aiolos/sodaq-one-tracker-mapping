@@ -5,6 +5,11 @@ class BasicTrackerPayload extends AbstractDecoder
 {
     protected $expectedLength = 21;
 
+    /**
+     * Decode the raw payload in the message,
+     * see http://forum.sodaq.com/t/interpreting-payload-data-from-the-sodaqone-universaltracker/374
+     * for more information
+     */
     protected function decodePayload()
     {
         $parsed = [];

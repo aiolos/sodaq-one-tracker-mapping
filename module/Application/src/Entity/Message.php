@@ -2,6 +2,7 @@
 
 namespace Application\Entity;
 
+use Application\Decoders\BasicTrackerPayload;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -280,8 +281,8 @@ class Message
             ->setDownlinkUrl($content['downlink_url'])
         ;
         try {
-            $decoded = $message->decodeRawPayload($message->getRawPayload());
-            $message->setDecodedPayload(json_encode($decoded));
+            $decoder = new BasicTrackerPayload($message->getRawPayload());
+            $message->setDecodedPayload(json_encode($decoder->getDecodedPayload()));
         } catch (\Exception $e) {
             // For now, we silently ignore
         }
