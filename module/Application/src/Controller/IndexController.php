@@ -60,18 +60,9 @@ class IndexController extends AbstractActionController
                 }
             }
         }
-        $gatewaysJsArray = 'var gatewayMarkers = [';
-        foreach ($gateways as $gatewayId => $gateway) {
-            if (strlen($gateway['latitude']) > 0 && strlen($gateway['longitude']) > 0) {
-                $gatewaysJsArray .= '["';
-                $gatewaysJsArray .= $gatewayId . '", ';
-                $gatewaysJsArray .= $gateway['latitude'] . ', ';
-                $gatewaysJsArray .= $gateway['longitude'] . '],';
-            }
-        }
+        $gatewaysJsArray = $this->createGatewaysArray($gateways);
 
         $markers .= '];';
-        $gatewaysJsArray .= '];';
 
         return new ViewModel([
             'messages' => $messagesForView,
@@ -96,13 +87,17 @@ class IndexController extends AbstractActionController
     {
         /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
-        if (!$request->isPost()) {
-            return new JsonModel(['status' => 'error', 'message' => 'You should do a post']);
+        if (!$request->isPost()
+            || empty($this->getRequest()->getContent())
+        ) {
+            $this->getResponse()->setStatusCode(400);
+            return new JsonModel(['status' => 'error', 'message' => 'You should do a post, and it should have content']);
         }
         if (!$request->getHeader($this->config['theThingsNetwork']['authHeaderKey'])
             || $request->getHeader($this->config['theThingsNetwork']['authHeaderKey'])->getFieldValue()
             !== $this->config['theThingsNetwork']['authHeaderValue']
         ) {
+            $this->getResponse()->setStatusCode(403);
             return new JsonModel(['status' => 'error', 'message' => 'Wrong authentication header']);
         }
 
@@ -112,12 +107,20 @@ class IndexController extends AbstractActionController
         $schemaPath = __DIR__ . '/../../../../data/schema/request.json';
         $validator = new \JsonSchema\Validator;
         if (!file_exists($schemaPath)) {
-            $this->logger->info('Scheme file could not be found: ' . $schemaPath);
+            $this->logger->emerg('Scheme file could not be found: ' . $schemaPath);
             return new JsonModel(['status' => 'error', 'message' => 'Schema file cannot be found']);
         }
+        try {
+            $requestContent = Json::decode(($request->getContent()));
+        } catch (\Exception $exception) {
+            $this->getResponse()->setStatusCode(400);
+            $this->logger->err('Request content could not be decoded: ' . $exception->getTraceAsString());
+            return new JsonModel(['status' => 'error', 'message' => 'Request content could not be decoded']);
+        }
+
         $schema = Json::decode(file_get_contents($schemaPath));
         $validator->validate(
-            Json::decode(($request->getContent())),
+            $requestContent,
             $schema
         );
 
@@ -195,5 +198,24 @@ class IndexController extends AbstractActionController
         $this->entityManager->flush();
 
         return $message;
+    }
+
+    /**
+     * @param $gateways
+     * @return string
+     */
+    private function createGatewaysArray($gateways)
+    {
+        $gatewaysJsArray = 'var gatewayMarkers = [';
+        foreach ($gateways as $gatewayId => $gateway) {
+            if (strlen($gateway['latitude']) > 0 && strlen($gateway['longitude']) > 0) {
+                $gatewaysJsArray .= '["';
+                $gatewaysJsArray .= $gatewayId . '", ';
+                $gatewaysJsArray .= $gateway['latitude'] . ', ';
+                $gatewaysJsArray .= $gateway['longitude'] . '],';
+            }
+        }
+        $gatewaysJsArray .= '];';
+        return $gatewaysJsArray;
     }
 }

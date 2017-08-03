@@ -2,27 +2,10 @@
 namespace ApplicationTest\Controller;
 
 use Application\Controller\IndexController;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
+use ApplicationTest\AbstractTestCase;
 
-class IndexControllerTest extends AbstractHttpControllerTestCase
+class IndexControllerTest extends AbstractTestCase
 {
-    public function setUp()
-    {
-        // The module configuration should still be applicable for tests.
-        // You can override configuration here with test case specific values,
-        // such as sample view templates, path stacks, module_listener_options,
-        // etc.
-        $configOverrides = [];
-
-        $this->setApplicationConfig(ArrayUtils::merge(
-            include __DIR__ . '/../../../../config/application.config.php',
-            $configOverrides
-        ));
-
-        parent::setUp();
-    }
-
     public function testIndexActionCanBeAccessed()
     {
         $this->dispatch('/', 'GET');
@@ -58,19 +41,64 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     public function testPostActionAsGetIsInvalid()
     {
         $this->dispatch('/application/post', 'GET');
-        $this->assertResponseStatusCode(200);
+        $this->assertResponseStatusCode(400);
         $this->assertEquals(
-            '{"status":"error","message":"You should do a post"}',
+            '{"status":"error","message":"You should do a post, and it should have content"}',
             $this->getResponse()->getContent()
         );
     }
 
     public function testPostActionAsPostWithoutHeaderIsInvalid()
     {
+        $this->getRequest()->setContent("Some content");
+        $this->dispatch('/application/post', 'POST');
+        $this->assertResponseStatusCode(403);
+        $this->assertEquals(
+            '{"status":"error","message":"Wrong authentication header"}',
+            $this->getResponse()->getContent()
+        );
+    }
+
+    public function testPostActionAsPostWithEmptyContentIsInvalid()
+    {
+        $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+        $_SERVER['HTTP_USER_AGENT'] = 'phpunit';
+        $headers = $this->getRequest()->getHeaders();
+        $headers->addHeaderLine('Authorization', 'yourAuthHeaderValue');
+        $this->dispatch('/application/post', 'POST');
+        $this->assertResponseStatusCode(400);
+        $this->assertEquals(
+            '{"status":"error","message":"You should do a post, and it should have content"}',
+            $this->getResponse()->getContent()
+        );
+    }
+
+    public function testPostActionAsPostWithWrongContentIsInvalid()
+    {
+        $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+        $_SERVER['HTTP_USER_AGENT'] = 'phpunit';
+        $headers = $this->getRequest()->getHeaders();
+        $headers->addHeaderLine('Authorization', 'yourAuthHeaderValue');
+        $this->getRequest()->setContent("Some content");
+        $this->dispatch('/application/post', 'POST');
+        $this->assertResponseStatusCode(400);
+        $this->assertEquals(
+            '{"status":"error","message":"Request content could not be decoded"}',
+            $this->getResponse()->getContent()
+        );
+    }
+
+    public function testPostActionAsPostWithContentIsValid()
+    {
+        $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+        $_SERVER['HTTP_USER_AGENT'] = 'phpunit';
+        $headers = $this->getRequest()->getHeaders();
+        $headers->addHeaderLine('Authorization', 'yourAuthHeaderValue');
+        $this->getRequest()->setContent(file_get_contents(__DIR__ . '/../../../../data/testdata/request.json'));
         $this->dispatch('/application/post', 'POST');
         $this->assertResponseStatusCode(200);
         $this->assertEquals(
-            '{"status":"error","message":"Wrong authentication header"}',
+            '{"status":"ok"}',
             $this->getResponse()->getContent()
         );
     }
