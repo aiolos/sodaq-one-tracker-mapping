@@ -87,9 +87,11 @@ class IndexController extends AbstractActionController
     {
         /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
-        if (!$request->isPost()) {
+        if (!$request->isPost()
+            || empty($this->getRequest()->getContent())
+        ) {
             $this->getResponse()->setStatusCode(400);
-            return new JsonModel(['status' => 'error', 'message' => 'You should do a post']);
+            return new JsonModel(['status' => 'error', 'message' => 'You should do a post, and it should have content']);
         }
         if (!$request->getHeader($this->config['theThingsNetwork']['authHeaderKey'])
             || $request->getHeader($this->config['theThingsNetwork']['authHeaderKey'])->getFieldValue()

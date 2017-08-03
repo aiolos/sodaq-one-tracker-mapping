@@ -43,17 +43,32 @@ class IndexControllerTest extends AbstractTestCase
         $this->dispatch('/application/post', 'GET');
         $this->assertResponseStatusCode(400);
         $this->assertEquals(
-            '{"status":"error","message":"You should do a post"}',
+            '{"status":"error","message":"You should do a post, and it should have content"}',
             $this->getResponse()->getContent()
         );
     }
 
     public function testPostActionAsPostWithoutHeaderIsInvalid()
     {
+        $this->getRequest()->setContent("Some content");
         $this->dispatch('/application/post', 'POST');
         $this->assertResponseStatusCode(403);
         $this->assertEquals(
             '{"status":"error","message":"Wrong authentication header"}',
+            $this->getResponse()->getContent()
+        );
+    }
+
+    public function testPostActionAsPostWithEmptyContentIsInvalid()
+    {
+        $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+        $_SERVER['HTTP_USER_AGENT'] = 'phpunit';
+        $headers = $this->getRequest()->getHeaders();
+        $headers->addHeaderLine('Authorization', 'yourAuthHeaderValue');
+        $this->dispatch('/application/post', 'POST');
+        $this->assertResponseStatusCode(400);
+        $this->assertEquals(
+            '{"status":"error","message":"You should do a post, and it should have content"}',
             $this->getResponse()->getContent()
         );
     }
@@ -64,6 +79,7 @@ class IndexControllerTest extends AbstractTestCase
         $_SERVER['HTTP_USER_AGENT'] = 'phpunit';
         $headers = $this->getRequest()->getHeaders();
         $headers->addHeaderLine('Authorization', 'yourAuthHeaderValue');
+        $this->getRequest()->setContent("Some content");
         $this->dispatch('/application/post', 'POST');
         $this->assertResponseStatusCode(400);
         $this->assertEquals(
