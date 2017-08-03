@@ -23,4 +23,22 @@ class BasicTrackerPayloadTest extends AbstractTestCase
         $this->assertEquals(0, $decoderResult['numsat']);
         $this->assertEquals(255, $decoderResult['fix']);
     }
+
+    /**
+     * @expectedException \Application\Exceptions\InvalidPayloadException
+     * @expectedExceptionMessage Payload not 21 bytes
+     */
+    public function testTooShortPayloadThrowsException()
+    {
+        new BasicTrackerPayload("WTSDWXgcsbw3H5hD");
+    }
+
+    /**
+     * @expectedException \Application\Exceptions\InvalidPayloadException
+     * @expectedExceptionMessage Empty payload given
+     */
+    public function testNoPayloadThrowsException()
+    {
+        new BasicTrackerPayload("");
+    }
 }

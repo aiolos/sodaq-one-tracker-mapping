@@ -1,6 +1,8 @@
 <?php
 namespace Application\Decoders;
 
+use Application\Exceptions\InvalidPayloadException;
+
 abstract class AbstractDecoder
 {
     protected $rawPayload;
@@ -21,13 +23,13 @@ abstract class AbstractDecoder
         if (!is_string($rawPayload)
             || empty($rawPayload)
         ) {
-            throw new \Exception('Empty payload given');
+            throw new InvalidPayloadException('Empty payload given');
         }
         $this->rawPayload = $rawPayload;
         $hex = bin2hex(base64_decode($rawPayload));
         // Hexadecimal is 2 character per byte
         if ((strlen($hex) / 2) !== $this->expectedLength) {
-            throw new \Exception('Payload not ' . $this->expectedLength . ' bytes');
+            throw new InvalidPayloadException('Payload not ' . $this->expectedLength . ' bytes');
         }
 
         $this->hexPayload = $hex;

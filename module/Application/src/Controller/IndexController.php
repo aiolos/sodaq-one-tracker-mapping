@@ -60,18 +60,9 @@ class IndexController extends AbstractActionController
                 }
             }
         }
-        $gatewaysJsArray = 'var gatewayMarkers = [';
-        foreach ($gateways as $gatewayId => $gateway) {
-            if (strlen($gateway['latitude']) > 0 && strlen($gateway['longitude']) > 0) {
-                $gatewaysJsArray .= '["';
-                $gatewaysJsArray .= $gatewayId . '", ';
-                $gatewaysJsArray .= $gateway['latitude'] . ', ';
-                $gatewaysJsArray .= $gateway['longitude'] . '],';
-            }
-        }
+        $gatewaysJsArray = $this->createGatewaysArray($gateways);
 
         $markers .= '];';
-        $gatewaysJsArray .= '];';
 
         return new ViewModel([
             'messages' => $messagesForView,
@@ -195,5 +186,24 @@ class IndexController extends AbstractActionController
         $this->entityManager->flush();
 
         return $message;
+    }
+
+    /**
+     * @param $gateways
+     * @return string
+     */
+    private function createGatewaysArray($gateways)
+    {
+        $gatewaysJsArray = 'var gatewayMarkers = [';
+        foreach ($gateways as $gatewayId => $gateway) {
+            if (strlen($gateway['latitude']) > 0 && strlen($gateway['longitude']) > 0) {
+                $gatewaysJsArray .= '["';
+                $gatewaysJsArray .= $gatewayId . '", ';
+                $gatewaysJsArray .= $gateway['latitude'] . ', ';
+                $gatewaysJsArray .= $gateway['longitude'] . '],';
+            }
+        }
+        $gatewaysJsArray .= '];';
+        return $gatewaysJsArray;
     }
 }
