@@ -25,6 +25,5 @@ class TrackerPayloadTest extends AbstractTestCase
         $this->assertEquals(200, $decoderResult['course']);
         $this->assertEquals(0, $decoderResult['numsat']);
         $this->assertEquals(255, $decoderResult['fix']);
-
     }
 }
