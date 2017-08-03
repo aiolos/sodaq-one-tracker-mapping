@@ -10,32 +10,26 @@
 
 ## Introduction
 
-This is a very simple application that can receive the payload from a SoDaq One LoRaWan tracker. 
-When a device is registered and a http-integration is added in [TheThingsNetwork.org](TheThingsNetwork.org) Console, this application
+This is an application that can receive the payload from a [SoDaq One LoRaWan](http://support.sodaq.com/sodaq-one/loraone/) tracker. 
+When a device is registered and a http-integration is added in [TheThingsNetwork.org](http://www.TheThingsNetwork.org) Console, this application
 can decode the messages and show the coordinates on a map, as well as the used gateways.
-
-This application is based on the Zend Framework 3 skeleton application.
 
 ## Installation
 
-After a checkout of this repository, you need to run composer:
-
+- Checkout this repository
+- Run composer (see [getcomposer.org](http://getcomposer.org) for more information about composer):
 ```bash
 $ composer install
 ```
-
-To create the database tables (in the database you set in your local config) run:
+- Copy `config/autoload/local.php.dist` to `config/autoload/local.php` and change credentials and key there
+    - Set up the 'Authorization' header and value that you also set in the integration
+    - Add Google maps API key
+- Create the database tables (in the database you set in your local config) run:
 ```bash
 $ ./vendor/bin/doctrine-module orm:schema-tool:create
 ```
-
-If you don't have composer, see [getcomposer.org](http://getcomposer.org) for more information
-
 - In the console of TheThingsNetwork, you need to add a http-integration, see https://youtu.be/Uebcq7xmI1M for more information
-- The url of the endpoint to set in the integration is [YourDomain]/application/post
-- Copy `config/autoload/local.php.dist` to `config/autoload/local.php`
-    - Set up the 'Auth' header and value that you also set in the integration
-    - Add Google maps API key
+- The url of the endpoint to set in the integration is `[YourDomain]/application/post`
 - Let the messages come in
 
 ## Todo:
@@ -64,3 +58,9 @@ If you don't have composer, see [getcomposer.org](http://getcomposer.org) for mo
 - Add graphs (using highcharts)
     - Temperature
     - Voltage
+    
+## Used packages worth mentioning
+- [Zend Framework 3](https://framework.zend.com/)
+- [Doctrine ORM](http://www.doctrine-project.org/)
+- [Json Schema Validation](https://github.com/justinrainbow/json-schema)
+- [Datatables](https://datatables.net/)
