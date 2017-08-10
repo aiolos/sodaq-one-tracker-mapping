@@ -5,22 +5,10 @@ namespace Application\Controller;
 use Application\Entity\Message;
 use Application\Entity\Payload;
 use Doctrine\ORM\Query;
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Doctrine\ORM\EntityManager;
 
-class IndexController extends AbstractActionController
+class IndexController extends AbstractThingsController
 {
-    protected $entityManager;
-
-    public function __construct(EntityManager $entityManager, $config, $logger)
-    {
-        $this->config = $config;
-        $this->entityManager = $entityManager;
-        /** @var \Zend\Log\Logger logger */
-        $this->logger = $logger;
-    }
-
     public function indexAction()
     {
         $messages = $this->entityManager->getRepository(Message::class)->findBy([], ['id' => 'DESC']);

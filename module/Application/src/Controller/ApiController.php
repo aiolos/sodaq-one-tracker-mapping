@@ -4,27 +4,13 @@ namespace Application\Controller;
 
 use Application\Entity\Message;
 use Application\Entity\Payload;
-use Application\Exceptions\AuthenticationException;
-use Application\Exceptions\InvalidPayloadException;
 use Application\Exceptions\ThingsException;
 use Doctrine\ORM\Query;
 use Zend\Json\Json;
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
-use Doctrine\ORM\EntityManager;
 
-class ApiController extends AbstractActionController
+class ApiController extends AbstractThingsController
 {
-    protected $entityManager;
-
-    public function __construct(EntityManager $entityManager, $config, $logger)
-    {
-        $this->config = $config;
-        $this->entityManager = $entityManager;
-        /** @var \Zend\Log\Logger logger */
-        $this->logger = $logger;
-    }
-
     /**
      * Save the complete content of the post in a Payload object
      * @return JsonModel
