@@ -95,7 +95,7 @@
                         echo '<tr>';
                         echo '<td>' . $message->deviceId . '</td>';
                         echo '<td>';
-                        echo DateTime::createFromFormat('Y-m-d\TH:i:s', substr($message->metadata->time, 0, 19))->format('d-m-Y H:i:s');
+                        echo DateTime::createFromFormat('Y-m-d\TH:i:s', substr($message->metadata->time, 0, 19))->add(new DateInterval('PT2H'))->format('d-m-Y H:i:s');
                         echo '</td>';
                         echo '<td>' . substr($message->metadata->time, 0, 19) . '</td>';
                         if (!empty($message->decodedPayload)) {

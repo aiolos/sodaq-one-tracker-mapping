@@ -29,7 +29,7 @@ $ composer install
 $ ./vendor/bin/doctrine-module orm:schema-tool:create
 ```
 - In the console of TheThingsNetwork, you need to add a http-integration, see https://youtu.be/Uebcq7xmI1M for more information
-- The url of the endpoint to set in the integration is `[YourDomain]/application/post`
+- The url of the endpoint to set in the integration is `[YourDomain]/api/post`
 - Let the messages come in
 
 ## Todo:
@@ -50,6 +50,7 @@ $ ./vendor/bin/doctrine-module orm:schema-tool:create
 - Only show a limited number of markers, for example using the datatables pagination
 - Enable/disable gateways and tracker points in map
 - Make a popup in the map to show more information about the datapoint in the map
+- Prevent duplicates
 - Adapt center and zoom level to the available datapoints
 - Add some logging
 - Only use php7

@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="gateways")
+ * @ORM\Table(name="gateway_connections")
  */
-class Gateway
+class GatewayConnections
 {
     /**
      * @ORM\Id
@@ -22,17 +22,22 @@ class Gateway
     protected $gtwId;
 
     /**
-     * @ORM\Column(name="latitude")
+     * @ORM\Column(name="message_id")
      */
-    protected $latitude;
+    protected $messageId;
 
     /**
-     * @ORM\Column(name="longitude")
+     * @ORM\Column(name="channel")
      */
-    protected $longitude;
+    protected $channel;
 
     /**
-     * @ORM\Column(name="altitude")
+     * @ORM\Column(name="snr")
      */
-    protected $altitude;
+    protected $snr;
+
+    /**
+     * @ORM\Column(name="rssi")
+     */
+    protected $rssi;
 }
