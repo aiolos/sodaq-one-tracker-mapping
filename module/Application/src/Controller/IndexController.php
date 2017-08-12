@@ -4,6 +4,8 @@ namespace Application\Controller;
 
 use Application\Entity\Message;
 use Application\Entity\Payload;
+use DateInterval;
+use DateTime;
 use Doctrine\ORM\Query;
 use Zend\View\Model\ViewModel;
 
@@ -30,7 +32,8 @@ class IndexController extends AbstractThingsController
                 $markers .= '["';
                 $markers .= $message->getId() . '", ';
                 $markers .= $messageForView->decodedPayload->lat . ', ';
-                $markers .= $messageForView->decodedPayload->lon;
+                $markers .= $messageForView->decodedPayload->lon . ', ';
+                $markers .= '"' . DateTime::createFromFormat('Y-m-d\TH:i:s', substr($messageForView->metadata->time, 0, 19))->add(new DateInterval('PT2H'))->format('d-m-Y H:i:s') . '"';
                 $markers .= '],';
             }
             if (property_exists($messageForView->metadata, 'gateways')) {
