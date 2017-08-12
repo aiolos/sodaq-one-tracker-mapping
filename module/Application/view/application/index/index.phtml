@@ -41,7 +41,9 @@
                     icon: image,
                     title: point[0]
                 });
-                content = "<span>" + point[3] + ":<br>" + point[0] + "<br>" + point[1] + ";" + point[2] + "</span>";
+                content = "<span>Seen on: " + point[3];
+                content += "<br>Id: " + point[0];
+                content += "<br>" + point[1] + ";" + point[2] + "</span>";
                 google.maps.event.addListener(marker,'click', (function(marker, content, infowindow){
                     return function() {
                         infowindow.setContent(content);
@@ -57,7 +59,9 @@
                     icon: gatewayImage,
                     title: point[0]
                 });
-                content = "<span>" + point[0] + ": " + point[1] + ";" + point[2] + "</span>";
+                content = "<span>GatewayId: " + point[0];
+                content += "<br>Location: " + point[1] + ";" + point[2];
+                content += "<br>Altitude: " + point[3] +  "</span>";
                 google.maps.event.addListener(marker,'click', (function(marker, content, infowindow){
                     return function() {
                         infowindow.setContent(content);

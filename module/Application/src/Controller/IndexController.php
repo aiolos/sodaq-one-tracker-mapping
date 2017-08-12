@@ -43,7 +43,8 @@ class IndexController extends AbstractThingsController
                     ) {
                         $gateways[$gateway->gtw_id] = [
                             'latitude' => $gateway->latitude,
-                            'longitude' => $gateway->longitude
+                            'longitude' => $gateway->longitude,
+                            'altitude' => $gateway->altitude,
                         ];
                     }
                 }
@@ -80,7 +81,8 @@ class IndexController extends AbstractThingsController
                 $gatewaysJsArray .= '["';
                 $gatewaysJsArray .= $gatewayId . '", ';
                 $gatewaysJsArray .= $gateway['latitude'] . ', ';
-                $gatewaysJsArray .= $gateway['longitude'] . '],';
+                $gatewaysJsArray .= $gateway['longitude'] . ', ';
+                $gatewaysJsArray .= $gateway['altitude'] . '],';
             }
         }
         $gatewaysJsArray .= '];';
