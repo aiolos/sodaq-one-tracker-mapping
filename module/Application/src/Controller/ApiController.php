@@ -5,7 +5,6 @@ namespace Application\Controller;
 use Application\Entity\Message;
 use Application\Entity\Payload;
 use Application\Exceptions\ThingsException;
-use Doctrine\ORM\Query;
 use Zend\Json\Json;
 use Zend\View\Model\JsonModel;
 
@@ -136,6 +135,11 @@ class ApiController extends AbstractThingsController
         }
     }
 
+    /**
+     * @param string $message
+     * @param integer $statusCode
+     * @return JsonModel
+     */
     private function createErrorResponse($message, $statusCode)
     {
         $this->getResponse()->setStatusCode($statusCode);
