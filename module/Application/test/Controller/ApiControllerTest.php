@@ -65,11 +65,11 @@ class ApiControllerTest extends AbstractTestCase
         $headers->addHeaderLine('Authorization', 'yourAuthHeaderValue');
         $this->getRequest()->setContent(file_get_contents(__DIR__ . '/../../../../data/testdata/request.json'));
         $this->dispatch('/api/post', 'POST');
-        $this->assertResponseStatusCode(200);
         $this->assertEquals(
             '{"status":"ok"}',
             $this->getResponse()->getContent()
         );
+        $this->assertResponseStatusCode(200);
     }
 
     public function testDecodeActionCanBeAccessed()

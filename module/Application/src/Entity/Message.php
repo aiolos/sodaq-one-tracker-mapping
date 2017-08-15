@@ -13,6 +13,7 @@ class Message
 {
     /**
      * @ORM\Id
+     * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer")
      */
     protected $id;
@@ -61,6 +62,11 @@ class Message
      * @ORM\Column(name="downlink_url", type="string")
      */
     protected $downlinkUrl;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GatewayConnection", mappedBy="message")
+     */
+    protected $gatewayConnections;
 
     /**
      * @return mixed

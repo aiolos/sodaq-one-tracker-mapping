@@ -2,6 +2,8 @@
 
 namespace Application\Controller;
 
+use Application\Entity\Gateway;
+use Application\Entity\GatewayConnection;
 use Application\Entity\Message;
 use Application\Entity\Payload;
 use Application\Exceptions\ThingsException;
@@ -52,7 +54,9 @@ class ApiController extends AbstractThingsController
         $this->entityManager->persist($payload);
         $this->entityManager->flush();
 
-        $this->createMessage($payload);
+        $message = $this->createMessage($payload);
+
+        $this->linkGateways($message);
 
         return new JsonModel(['status' => 'ok']);
     }
@@ -144,5 +148,36 @@ class ApiController extends AbstractThingsController
     {
         $this->getResponse()->setStatusCode($statusCode);
         return new JsonModel(['status' => 'error', 'message' => $message]);
+    }
+
+    /**
+     * @param Message $message
+     */
+    private function linkGateways($message)
+    {
+        $metadata = json_decode($message->getMetadata(), true);
+        foreach ($metadata['gateways'] as $gateway) {
+            $this->logger->info(var_export($gateway, true));
+            $gatewayEntity = $this->entityManager->getRepository(Gateway::class)->findBy(['gtwId' => $gateway['gtw_id']]);
+            if (!$gatewayEntity) {
+                $gatewayEntity = new Gateway();
+                $gatewayEntity->setAltitude($gateway['altitude']);
+                $gatewayEntity->setLongitude($gateway['longitude']);
+                $gatewayEntity->setLatitude($gateway['latitude']);
+                $gatewayEntity->setGtwId($gateway['gtw_id']);
+
+                $this->entityManager->persist($gatewayEntity);
+                $this->entityManager->flush();
+            }
+            $gatewayConnection = new GatewayConnection();
+            $gatewayConnection->setMessage($message);
+            $gatewayConnection->setGateway($gatewayEntity);
+            $gatewayConnection->setChannel($gateway['channel']);
+            $gatewayConnection->setRssi($gateway['rssi']);
+            $gatewayConnection->setSnr($gateway['snr']);
+
+            $this->entityManager->persist($gatewayConnection);
+        }
+        $this->entityManager->flush();
     }
 }
