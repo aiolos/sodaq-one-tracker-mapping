@@ -14,6 +14,8 @@ This is an application that can receive the payload from a [SoDaq One LoRaWan](h
 When a device is registered and a http-integration is added in [TheThingsNetwork.org](http://www.TheThingsNetwork.org) Console, this application
 can decode the messages and show the coordinates on a map, as well as the used gateways.
 
+An example can be found here: https://things.enri.nl/
+
 ## Installation
 
 - Checkout this repository
