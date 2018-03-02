@@ -30,11 +30,22 @@ return [
                     ],
                 ],
             ],
+            'api' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/api[/:action]',
+                    'defaults' => [
+                        'controller' => Controller\ApiController::class,
+                        'action'     => 'post',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => Controller\IndexControllerFactory::class,
+            Controller\ApiController::class => Controller\ApiControllerFactory::class,
         ],
     ],
     'view_manager' => [

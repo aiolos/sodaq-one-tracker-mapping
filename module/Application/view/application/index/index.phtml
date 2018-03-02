@@ -3,7 +3,6 @@
     <div id="map" style="height: 600px;" class="col-md-12"></div>
     </div>
     <script>
-
         function initMap() {
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 12,
@@ -20,11 +19,6 @@
         ?>
 
         function setMarkers(map) {
-            // Adds markers to the map.
-            // Marker sizes are expressed as a Size of X,Y where the origin of the image
-            // (0,0) is located in the top left of the image.
-            // Origins, anchor positions and coordinates of the marker increase in the X
-            // direction to the right and in the Y direction down.
             var image = {
                 url: '<?php echo $this->basePath('img/wifi.png') ?>',
                 size: new google.maps.Size(32, 32),
@@ -37,32 +31,43 @@
                 origin: new google.maps.Point(0, 0),
                 anchor: new google.maps.Point(16, 32)
             };
-            // Shapes define the clickable region of the icon. The type defines an HTML
-            // <area> element 'poly' which traces out a polygon as a series of X,Y points.
-            // The final coordinate closes the poly by connecting to the first coordinate.
-            var shape = {
-                coords: [1, 1, 1, 20, 18, 20, 18, 1],
-                type: 'poly'
-            };
-            for (var i = 0; i < sodaqMarkers.length; i++) {
-                var point = sodaqMarkers[i];
-                var marker = new google.maps.Marker({
+            var infowindow = new google.maps.InfoWindow();
+
+            for (i = 0; i < sodaqMarkers.length; i++) {
+                point = sodaqMarkers[i];
+                marker = new google.maps.Marker({
                     position: {lat: point[1], lng: point[2]},
                     map: map,
                     icon: image,
-                    shape: shape,
                     title: point[0]
                 });
+                content = "<span>Seen on: " + point[3];
+                content += "<br>Id: " + point[0];
+                content += "<br>" + point[1] + ";" + point[2] + "</span>";
+                google.maps.event.addListener(marker,'click', (function(marker, content, infowindow){
+                    return function() {
+                        infowindow.setContent(content);
+                        infowindow.open(map, marker);
+                    };
+                })(marker, content, infowindow));
             }
-            for (var i = 0; i < gatewayMarkers.length; i++) {
-                var point = gatewayMarkers[i];
-                var marker = new google.maps.Marker({
+            for (i = 0; i < gatewayMarkers.length; i++) {
+                point = gatewayMarkers[i];
+                marker = new google.maps.Marker({
                     position: {lat: point[1], lng: point[2]},
                     map: map,
                     icon: gatewayImage,
-                    shape: shape,
                     title: point[0]
                 });
+                content = "<span>GatewayId: " + point[0];
+                content += "<br>Location: " + point[1] + ";" + point[2];
+                content += "<br>Altitude: " + point[3] +  "</span>";
+                google.maps.event.addListener(marker,'click', (function(marker, content, infowindow){
+                    return function() {
+                        infowindow.setContent(content);
+                        infowindow.open(map, marker);
+                    };
+                })(marker, content, infowindow));
             }
         }
     </script>
@@ -95,7 +100,7 @@
                         echo '<tr>';
                         echo '<td>' . $message->deviceId . '</td>';
                         echo '<td>';
-                        echo DateTime::createFromFormat('Y-m-d\TH:i:s', substr($message->metadata->time, 0, 19))->format('d-m-Y H:i:s');
+                        echo DateTime::createFromFormat('Y-m-d\TH:i:s', substr($message->metadata->time, 0, 19))->add(new DateInterval('PT2H'))->format('d-m-Y H:i:s');
                         echo '</td>';
                         echo '<td>' . substr($message->metadata->time, 0, 19) . '</td>';
                         if (!empty($message->decodedPayload)) {
